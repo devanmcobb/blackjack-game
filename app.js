@@ -22,10 +22,18 @@
 // 18. Create a card variable and add the new card to the sum variable
 // 20. Call startGame()
 // 21. Rename startGame() function to renderGame()
-// 22. Create a new function startGame() that calls function renderGame()
+// 22. Create new function startGame() that calls function renderGame()
+// 23. Create new array - cards - that contains firstCard and secondCard.
+// 24. Reference the cards array when rendering out the cards
+// 25. Create for loop that renders out all the cards instead of just two
+// 26. Push the new card to the cards array
+// 27. Create a function, getRandomCard() return a random number between 1 and 13.
+// 28. Set the value of firstCard and secondCard to getRandomCard() function.
+// 29. Set value of card variable in newCard() function to getRandomCard() function.
 
-let firstCard = 10
-let secondCard = 4
+let firstCard = getRandomCard()
+let secondCard = getRandomCard()
+let cards = [firstCard, secondCard]
 let sum = firstCard + secondCard
 let hasBlackJack = false
 let isAlive = true
@@ -34,12 +42,28 @@ let messageEl = document.getElementById("message-el")
 let sumEl = document.getElementById("sum-el")
 let cardsEl = document.getElementById("cards-el")
 
+
+function getRandomCard() {
+    let randomNumer = Math.floor(Math.random() * 13) + 1
+    if (randomNumer > 10) {
+        return 10
+    } else if (randomNumer === 1) {
+        return 11
+    } else {
+        return randomNumer
+    }
+}
+
 function startGame() {
     renderGame()
 }
 
 function renderGame() {
-    cardsEl.textContent = "Cards: " + firstCard + " " + secondCard
+    cardsEl.textContent = "Cards: "
+    for (let i = 0; i < cards.length; i++) {
+        cardsEl.textContent += cards[i] + " "
+    }
+
     sumEl.textContent = "Sum: " + sum
     if (sum <= 20) {
         message = "Do you want to draw a new card?"
@@ -53,8 +77,10 @@ function renderGame() {
     messageEl.textContent = message
 }
 
+
 function newCard() {
-    let card = 6
+    let card = getRandomCard()
     sum += card
+    cards.push(card)
     renderGame()
 }
