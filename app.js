@@ -38,3 +38,4 @@ function startGame() {
     }
 
     messageEl.textContent = message
+}
