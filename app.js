@@ -1,105 +1,242 @@
-// 1. Create two variables, firstCard and secondCard.
-// 2. Set their values to a random number between 2-11
-// 3. Create a variable, sum, and set it to the sum of the two cards
-// 4. Write conditional according to these rules:
-//  if less than or equal to 20 -> "Do you want to draw a new card?"
-//  else if exactly 21 -> "You've got Blackjack!"
-//  else -> "You're out of the game!"
-// 5. Create a variable called hasBlackJack and assign it to false
-// 6. Create a variable called isAlive and assign it to true
-// 7. Flip its value to false in appropriate code block
-// 8. Declare a variable called message and assign its value to an empty string
-// 9. Reassign  message variable to string thats logged out
-// 10. Create a startGame() function. Move conditional
-//  below (line 11-20) inside body of function.
-// 11. Store message-el paragraph in a variable called messageEl
-// 12. Display message in ] messageEl
-// 13. Store sum paragraph in a variable called sumEl
-// 14. Render sum on page with this format -> "Sum: 14"
-// 15. Store cards paragraph in a variable called cardsEl
-// 16. Render cards on page with this format -> "Cards: 10 4"
-// 17. Create function newCard() that logs out "Drawing a new card from the deck!"
-// 18. Create a card variable and add new card to sum variable
-// 20. Call startGame()
-// 21. Rename startGame() function to renderGame()
-// 22. Create new function startGame() that calls function renderGame()
-// 23. Create new array - cards - that contains firstCard and secondCard.
-// 24. Reference cards array when rendering out cards
-// 25. Create for loop that renders out all cards instead of just two
-// 26. Push new card to cards array
-// 27. Create a function, getRandomCard() return a random number between 1 and 13.
-// 28. Set value of firstCard and secondCard to getRandomCard() function.
-// 29. Set value of card variable in newCard() function to getRandomCard() function.
-// 30. Write if else statement for getRandomCard() function.
-// 31. Assign the first and secondCard variables in startGame() function to getRandomCardo().
-// 32. Re-assign  cards and sum variables so game can start
-// 33. Fix NEW CARD button. Only allow player to get a new card if isAlive is true and hasBlackJack is false
-// 34. Create player object giving it two keys, name and chips, set their values.
-// 35. Grab ahold of player-el and store in variable called playerEl
-// 36. Render player's name and chips in playerEl
-
-
-let player = {
-    name: "devancorleone",
-    chips: 424
-}
 let cards = []
+let dealerHand = []
+let playerHand = []
 let sum = 0
+let dealerSum = 0
 let hasBlackJack = false
 let isAlive = false
 let message = ""
-let messageEl = document.getElementById("message-el")
-let sumEl = document.getElementById("sum-el")
-let cardsEl = document.getElementById("cards-el")
-let playerEl = document.getElementById("player-el")
+const cardsEl = document.getElementById("cards-el")
+const dealerCardsEl = document.getElementById("dealer-cards-el")
+const messageEl = document.getElementById("message-el")
+const sumEl = document.getElementById("sum-el")
+const playerEl = document.getElementById("player-el")
 
-playerEl.textContent = player.name + ": $" + player.chips
+// most popular version of the game is played with 6 decks of 52 cards
+const cardPool = ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A',
+    2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+    3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+    4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+    5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+    6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+    7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
+    8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+    9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+    10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+    'J', 'J', 'J', 'J', 'J', 'J', 'J', 'J', 'J', 'J', 'J', 'J', 'J', 'J', 'J', 'J', 'J', 'J', 'J', 'J', 'J', 'J', 'J', 'J',
+    'Q', 'Q', 'Q', 'Q', 'Q', 'Q', 'Q', 'Q', 'Q', 'Q', 'Q', 'Q', 'Q', 'Q', 'Q', 'Q', 'Q', 'Q', 'Q', 'Q', 'Q', 'Q', 'Q', 'Q',
+    'K', 'K', 'K', 'K', 'K', 'K', 'K', 'K', 'K', 'K', 'K', 'K', 'K', 'K', 'K', 'K', 'K', 'K', 'K', 'K', 'K', 'K', 'K', 'K',]
+const suits = ['\u2660', '\u2665', '\u2663', '\u2666']
+let pot = 100
+let bet = document.getElementById('bet-input')
 
-function getRandomCard() {
-    let randomNumber = Math.floor(Math.random() * 13) + 1
-    if (randomNumber > 10) {
-        return 10
-    } else if (randomNumber === 1) {
-        return 11
-    } else {
-        return randomNumber
-    }
-}
+document.getElementById("pot-el").textContent = `Pot: ${pot}`
 
-function startGame() {
-    isAlive = true
-    let firstCard = getRandomCard()
-    let secondCard = getRandomCard()
-    cards = [firstCard, secondCard]
-    sum = firstCard + secondCard
-    renderGame()
-}
-
-function renderGame() {
-    cardsEl.textContent = "Cards: "
-    for (let i = 0; i < cards.length; i++) {
-        cardsEl.textContent += cards[i] + " "
-    }
-
-    sumEl.textContent = "Sum: " + sum
-    if (sum <= 20) {
-        message = "Do you want to draw a new card?"
-    } else if (sum === 21) {
-        message = "You've got Blackjack!"
+function checkNatural() {
+    // natural is when the first 2 cards only total 21
+    if (dealerHand.length === 2 && dealerHand === 21) {
+        message = "BlackJack! Dealer Won!"
+        if (sum < 21) {
+            isAlive = false
+        } else if (sum === 21) {
+            message = "Standoff! You get your bet back"
+            hasBlackJack = true
+            pot += parseInt(bet.value())
+            document.getElementById("pot-el").textContent = `Pot: ${pot}`
+        }
+    } else if (playerHand.length === 2 && playerHand === 21) {
+        message = "BlackJack! You've Won!"
         hasBlackJack = true
-    } else {
-        message = "You're out of the game!"
+        pot += bet.value() * 1.5
+        document.getElementById("pot-el").textContent = `Pot: ${pot}`
+    }
+    checkBust()
+}
+
+function checkBust() {
+    if (sum <= 20 & !hasBlackJack & isAlive) {
+        message = "Do you want to draw a new card?"
+    } else if (sum > 21) {
+        message = "It's a bust"
+        hasBlackJack = false
         isAlive = false
     }
     messageEl.textContent = message
+
+    if (isAlive & !hasBlackJack) {
+        document.getElementById("new-card-btn").style.display = "inline"
+        document.getElementById("stand-btn").style.display = "inline"
+        document.getElementById("start-btn").style.display = "none"
+        bet.disabled = true
+    } else {
+        document.getElementById("new-card-btn").style.display = "none"
+        document.getElementById("stand-btn").style.display = "none"
+        document.getElementById("start-btn").style.display = "inline"
+        bet.disabled = false
+    }
+}
+
+function dealerPlay() {
+    if (dealerSum < 17) {
+        setTimeout(() => {
+            renderGame("dealer")
+            dealerPlay()
+        }, 1000)
+    } else {
+        outcome()
+    }
+}
+
+function randomCard() {
+    let randomCard = Math.floor(Math.random() * cardPool.length)
+    if (!cards.includes(randomCard)) {
+        return randomCard
+    } else {
+        // if the card has been drawn, this prevents an endless loop.
+        if (cards.length >= 312)
+            cards = []
+    }
+    // then try again
+    return randomCard()
+}
+
+function renderGame(player) { // deal card - player
+    const nextCard = randomCard()
+    const faceCards = ['J', 'Q', 'K']
+    cards.push(nextCard)
+    const cardEl = document.createElement("div")
+    cardEl.classList.add('card')
+    const cardNum = cardPool[nextCard]
+    const cardSuit = suits[nextCard % 4]
+    if (nextCard % 4 === 1 | nextCard % 4 === 3) {
+        cardEl.classList.add('darkslateblue')
+    }
+    let checkSum = 0
+    if (player === "player") {
+        checkSum = sum
+    } else {
+        checkSum = dealerSum
+    }
+    let cardValue = 0
+    if (cardNum === 'A' & checkSum + 11 <= 21) {
+        cardValue = 11
+    } else if (cardNum === 'A' & checkSum + 11 > 21) {
+        cardValue = 1
+    } else if (faceCards.includes(cardNum)) {
+        cardValue = 10
+    } else { cardValue = cardNum }
+
+    if (player === "player") {
+        cardsEl.appendChild(cardEl)
+        cardEl.innerHTML = `${cardNum}<br>${cardSuit}`
+        playerHand.push(nextCard)
+        sum += cardValue
+        document.getElementById("sum-el").textContent = `Sum: ${sum}`
+    } else if (player === "dealer") {
+        dealerHand.push(nextCard)
+        dealerCardsEl.appendChild(cardEl)
+        dealerSum += cardValue
+        if (dealerHand.length === 2 & dealerSum != 21) {
+            cardEl.classList.add('face-down')
+            cardEl.textContent = '\u2655'
+            document.getElementById("dealer-sum-el").textContent = `Sum: ???`
+        } else {
+            cardEl.innerHTML = `${cardNum}<br>${cardSuit}`
+            document.getElementById("dealer-sum-el").textContent = `Sum: ${dealerSum}`
+        }
+    }
 }
 
 
 function newCard() {
-    if (isAlive === true && hasBlackJack === false) {
-        let card = getRandomCard()
-        sum += card
-        cards.push(card)
-        renderGame()
+    if (isAlive & !hasBlackJack & sum != 21) {
+        renderGame("player")
+        checkBust()
+    } else if (sum === 21) {
+        message = "You shouldn't do that!"
+        messageEl.textContent = message
+    }
+}
+
+function flipCard(secondCard) {
+    return new Promise(resolve => {
+        secondCard.classList.toggle('flipped')
+        setTimeout(() => resolve(1), 1000)
+    })
+
+}
+
+function resetDealerCard(secondCard) {
+    card = dealerHand[1]
+    const cardNum = cardPool[card]
+    const cardSuit = suits[card % 4]
+    secondCard.classList.remove('face-down', 'flipped')
+    secondCard.innerHTML = `${cardNum}<br>${cardSuit}`
+}
+
+
+async function stand() {
+    document.getElementById("new-card-btn").style.display = "none"
+    document.getElementById("stand-btn").style.display = "none"
+    message = "Dealer's turn..."
+    document.getElementById("message-el").textContent = message
+    const secondCard = dealerCardsEl.children[1]
+    const flipped = await flipCard(secondCard)
+    resetDealerCard(secondCard)
+    document.getElementById("dealer-sum-el").textContent = `Sum: ${dealerSum}`
+    dealerPlay()
+}
+
+function outcome() {
+    if (dealerSum > 21) {
+        message = "Dealer bust, you win!"
+        pot += bet.value * 2
+    } else if (dealerSum == sum) {
+        message = "Push. Chips returned!"
+        pot += parseInt(bet.value)
+    } else if (sum > dealerSum) {
+        message = "You win!"
+        pot += bet.value * 2
+    } else if (sum < dealerSum) {
+        message = "Dealer wins!"
+    }
+    messageEl.textContent = message
+    document.getElementById("pot-el").textContent = `Pot: ${pot}`
+    document.getElementById("start-btn").style.display = "inline"
+}
+
+function startDealer() {
+    renderGame("dealer")
+    renderGame("dealer")
+}
+
+function startGame() {
+    sum = 0
+    cards = []
+    playerHand = []
+    dealerHand = []
+    hasBlackJack = false
+    cardsEl.innerHTML = ""
+    document.getElementById("sum-el").textContent = "Sum: "
+    document.getElementById("pot-el").textContent = `Pot: ${pot}`
+    let firstCard = randomCard()
+    let secondCard = randomCard()
+    currentCards = [firstCard, secondCard]
+    dealerSum = 0
+    dealerCardsEl.innerHTML = ""
+    document.getElementById("dealer-sum-el").textContent = "Sum: "
+
+    if (bet.value > pot) {
+        message = "Not enough credits to play!"
+        document.getElementById("message-el").textContent = message
+    } else {
+        isAlive = true
+        bet.disabled = true
+        pot -= bet.value
+        document.getElementById("pot-el").textContent = `Pot: ${pot}`
+        renderGame('player')
+        renderGame('player')
+        startDealer()
+        checkNatural()
     }
 }

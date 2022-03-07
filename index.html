@@ -5,13 +5,26 @@
 </head>
 
 <body>
-    <h1>Blackjack</h1>
+    <h1>TWENTY-ONE</h1>
+    <div id="dealer-area">
+        <h2>Dealer</h2>
+        <div id="dealer-cards-el"> </div>
+        <p id="dealer-sum-el">Sum:</p>
+    </div>
     <p id="message-el">Want to play a round?</p>
-    <p id="cards-el">Cards:</p>
-    <p id="sum-el">Sum:</p>
-    <button onclick="startGame()">START GAME</button>
-    <button onclick="newCard()">NEW CARD</button>
+    <div id="player-area">
+        <h2>Player</h2>
+        <div id="cards-el"></div>
+        <p id="sum-el">Sum:</p>
+        <button id="start-btn" onclick="startGame()">START</button>
+        <button id="new-card-btn" onclick="newCard()">HIT</button>
+        <button id="stand-btn" onclick="stand()">STAND</button>
+    </div>
     <p id="player-el"></p>
+    <p id="pot-el"></p>
+    <label for="">BET: <input type="number" id="bet-input" value="10"></label>
+    <p></p>
+
     <script src="app.js"></script>
 </body>
 

@@ -1,29 +1,107 @@
+* {
+	box-sizing: border-box;
+	list-style: none;
+}
+
+.article-content {
+	padding-top: 50px;
+	padding-bottom: 25px;
+	clear: both;
+	display: block;
+}
+
 body {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    background-image: url("table.png");
-    background-size: cover;
-    text-align: center;
-    color: white;
-    font-weight: bold;
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+	background-image: url("table.png");
+	background-size: cover;
+	font-weight: bold;
+	color: white;
+	text-align: center;
 }
 
 h1 {
-    color: goldenrod;
+	color: goldenrod;
+}
+
+h2 {
+	color: silver;
+}
+header {
+	font-weight: bold;
+	display: flex;
+	justify-content: space-between;
+	font-size: 20px;
+}
+
+header a {
+	color: goldenrod;
+	border: none;
+	font-size: 23px;
+	margin: 0px 20px;
+}
+
+h4.text {
+	display: block;
+	color: red;
+	margin-block-start: 1.33em;
+	margin-block-end: 1.33em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+}
+
+input {
+	width: 50px;
+}
+
+#username {
+	width: 150px;
 }
 
 #message-el {
-    font-style: italic;
+	font-style: italic;
 }
 
 button {
-    color: #016f32;
-    width: 150px;
-    background: goldenrod;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    font-weight: bold;
-    border: none;
-    border-radius: 2px;
-    margin-bottom: 2px;
-    margin-top: 2px;
+	padding: 10px 50px;
+	background: goldenrod;
+	color: #016f32;
+	font-weight: bold;
+	text-transform: uppercase;
+	border: none;
+	border-radius: 5px;
+	width: 150px;
+	margin-bottom: 2px;
+	margin-top: 2px;
+}
+
+#card-btn,
+#hold-btn {
+	display: none;
+}
+
+.card {
+	display: inline-block;
+	background: white;
+	color: black;
+	width: 30px;
+	height: 50px;
+	padding-top: 5px;
+	border-radius: 3px;
+	margin: 0 2px;
+}
+
+.red {
+	color: red;
+}
+
+.face-down {
+	background-color: darkslateblue;
+	padding-top: 10px;
+	color: white;
+	border: solid 3px white;
+	transition: background-color 1s ease-out;
+}
+
+.flipped {
+	background-color: white;
 }
